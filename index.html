@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZMAX - إجابات دروس JavaScript</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2d6bc4;
+            --accent-color: #00b4d8;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --success-color: #10b981;
+            --gradient-primary: linear-gradient(135deg, #1a365d 0%, #2d6bc4 100%);
+            --gradient-accent: linear-gradient(135deg, #00b4d8 0%, #2d6bc4 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* الهيدر */
+        .main-header {
+            background: var(--gradient-primary);
+            padding: 25px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-bottom: 4px solid var(--accent-color);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            background: var(--gradient-accent);
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 15px rgba(0, 180, 216, 0.3);
+        }
+        
+        .logo-icon i {
+            font-size: 28px;
+            color: white;
+        }
+        
+        .logo-text h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .logo-text .tagline {
+            font-size: 1rem;
+            color: #dbeafe;
+            font-weight: 300;
+        }
+        
+        .zmax-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px 25px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* المحتوى الرئيسي */
+        .main-content {
+            padding: 50px 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .section-header {
+            background: var(--gradient-primary);
+            padding: 25px 30px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-header i {
+            font-size: 24px;
+            color: var(--accent-color);
+        }
+        
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .section-body {
+            padding: 30px;
+        }
+        
+        /* تصميم الدرس */
+        .lesson {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .lesson:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .lesson-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .lesson-title i {
+            color: var(--secondary-color);
+        }
+        
+        /* الأسئلة */
+        .questions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .questions-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease;
+        }
+        
+        .question-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+        
+        .question-number {
+            background: var(--gradient-primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .answer {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border-right: 4px solid var(--accent-color);
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            line-height: 1.8;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        /* أزرار النسخ */
+        .copy-btn {
+            background: var(--gradient-accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 180, 216, 0.3);
+        }
+        
+        /* الفوتر */
+        .main-footer {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 50px;
+            border-top: 4px solid var(--accent-color);
+        }
+        
+        .prayer-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #dbeafe;
+        }
+        
+        /* رسالة النسخ */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--success-color);
+            color: white;
+            padding: 18px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            z-index: 1000;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* تحسينات للجوّال */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 25px;
+                text-align: center;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>ZMAX</h1>
+                        <p class="tagline">منصة التعلم التفاعلي المتقدم</p>
+                    </div>
+                </div>
+                <div class="zmax-badge">
+                    <i class="fas fa-star"></i> النسخة الاحترافية
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <div class="main-content">
+            <!-- قسم الأسئلة -->
+            <section class="section-card">
+                <div class="section-header">
+                    <i class="fas fa-book-open"></i>
+                    <h2>إجابات أسئلة JavaScript</h2>
+                </div>
+                <div class="section-body">
+                    <div class="lesson">
+                        <h3 class="lesson-title">
+                            <i class="fas fa-play-circle"></i>
+                            الأسئلة والإجابات
+                        </h3>
+                        
+                        <div class="questions-container">
+                            <!-- السؤال 1 -->
+                            <div class="question-card">
+                                <div class="question-number">1</div>
+                                <div class="question-text">إجابة السؤال الأول:</div>
+                                <div class="answer" id="answer1">5
+6
+7</div>
+                                <button class="copy-btn" data-target="answer1">
+                                    <i class="far fa-copy"></i> نسخ الإجابة
+                                </button>
+                            </div>
+                            
+                            <!-- السؤال 2 -->
+                            <div class="question-card">
+                                <div class="question-number">2</div>
+                                <div class="question-text">إجابة السؤال الثاني:</div>
+                                <div class="answer" id="answer2">let numList = [2, 4, 6, 8];
+for (let num of numList) {
+    console.log(num);
+}</div>
+                                <button class="copy-btn" data-target="answer2">
+                                    <i class="far fa-copy"></i> نسخ الإجابة
+                                </button>
+                            </div>
+                            
+                            <!-- السؤال 3 -->
+                            <div class="question-card">
+                                <div class="question-number">3</div>
+                                <div class="question-text">إجابة السؤال الثالث:</div>
+                                <div class="answer" id="answer3">let wordList = ["Good morning", "Good night", "Hello"];
+for (let word of wordList) {
+    console.log(word);
+}</div>
+                                <button class="copy-btn" data-target="answer3">
+                                    <i class="far fa-copy"></i> نسخ الإجابة
+                                </button>
+                            </div>
+                            
+                            <!-- السؤال 4 -->
+                            <div class="question-card">
+                                <div class="question-number">4</div>
+                                <div class="question-text">إجابة السؤال الرابع:</div>
+                                <div class="answer" id="answer4">100</div>
+                                <button class="copy-btn" data-target="answer4">
+                                    <i class="far fa-copy"></i> نسخ الإجابة
+                                </button>
+                            </div>
+                            
+                            <!-- السؤال 5 -->
+                            <div class="question-card">
+                                <div class="question-number">5</div>
+                                <div class="question-text">إجابة السؤال الخامس:</div>
+                                <div class="answer" id="answer5">Destination is the amusement park</div>
+                                <button class="copy-btn" data-target="answer5">
+                                    <i class="far fa-copy"></i> نسخ الإجابة
+                                </button>
+                            </div>
+                            
+                            <!-- السؤال 6 -->
+                            <div class="question-card">
+                                <div class="question-number">6</div>
+                                <div class="question-text">إجابة السؤال السادس:</div>
+                                <div class="answer" id="answer6">let weather = "rain";
+let time = "morning";
+
+if (weather == "rain") {
+    if (time == "morning") {
+        console.log("Let's go to the movie theater");
+    } else if (time == "noon") {
+        console.log("Let's go to the library");
+    } else {
+        console.log("Let's stay at home");
+    }
+} else {
+    console.log("Let's go for a walk");
+}</div>
+                                <button class="copy-btn" data-target="answer6">
+                                    <i class="far fa-copy"></i> نسخ الإجابة
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <!-- الفوتر -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="prayer-text">صلِّ على سيدنا محمد</div>
+                <p>ZMAX - منصة التعلم التفاعلي المتقدم</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- رسالة النسخ -->
+    <div class="notification" id="copyNotification">
+        <i class="fas fa-check-circle"></i>
+        <span>تم نسخ الإجابة بنجاح!</span>
+    </div>
+
+    <script>
+        // وظيفة نسخ الإجابات
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const answerElement = document.getElementById(targetId);
+                const answerText = answerElement.textContent;
+                
+                // نسخ النص إلى الحافظة
+                navigator.clipboard.writeText(answerText).then(() => {
+                    showNotification();
+                }).catch(err => {
+                    // الطريقة البديلة
+                    const textArea = document.createElement('textarea');
+                    textArea.value = answerText;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showNotification();
+                });
+                
+                // تغيير مظهر الزر مؤقتاً
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                this.style.background = 'linear-gradient(135deg, #10b981 0%, #34d399 100%)';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalHTML;
+                    this.style.background = 'linear-gradient(135deg, #00b4d8 0%, #2d6bc4 100%)';
+                }, 2000);
+            });
+        });
+        
+        // عرض إشعار النسخ
+        function showNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // تأثيرات الظهور
+        const observerOptions = {
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // إضافة تأثير الظهور للبطاقات
+        document.querySelectorAll('.question-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            card.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
